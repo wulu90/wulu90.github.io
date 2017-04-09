@@ -143,3 +143,150 @@ print(sess.run(loss,{x:[1,2,3,4],y:[0,-1,-2,-3]}))
 ```
 我们猜测到了`W`和`b`的“完美”值，但是机器学习的全部意义就是自动找到正确的模型参数。我们将在下一张展示如何达到这个目的。
 
+# tf.train API
+关于机器学习的完整讨论超出了本教程的范围。但是，TensorFlow提供了**优化器optimizers**来慢慢的改变每个变量以便最小化损失函数。最简单的优化器是**梯度下降gradient descent**。它根据相对于每个变量的损失导数大小来修改变量。通常，手工计算符号导数是乏味且容易出错的。所以，TensorFlow可以使用函数`tf.gradient`自动计算仅给出模型描述的导数。为了简单起见，优化器通常替你做这个。例如：
+```py
+optimizer=tf.train.GradientDescentOptimizer(0.01)
+train=optimizer.minimize(loss)
+```
+```py
+sess.run(init) # reset values to incorrect defaults
+for i in range(1000):
+    sess.run(train,{x:[1,2,3,4],y:[0,-1,-2,-3]})
+
+print(sess.run([W,b]))
+```
+最终模型参数的结果：
+```py
+[array([-0.9999969],dtype=float32),array([0.99999082],dtype=float32)]
+```
+现在我们完成了实际的机器学习！尽管完成这个简单的线性回归不需要很多TensorFlow core代码，更加复杂的模型和方法将数据输入到模型中需要更多的代码。因此TensorFlow为常见模式，结构和功能提供了更高级别的的抽象。我们将在下一章中学习如何使用这些抽象。
+
+# Complete program
+完整的可训练的线性回归模型展示在下方：
+```py
+import numpy as np
+import tensorflow as tf
+
+# Model parameters
+W=tf.Variable([.3],tf.float32)
+b=tf.Variable([-.3],tf.float32)
+# Model input and output
+x=tf.placeholder(tf.float32)
+linear_model=W*x+b
+y=tf.placeholder(tf.float32)
+# loss
+loss=tf.reduce_sum(tf.square(linear_model-y)) # sum of the squares
+# optimizer
+optimizer=tf.train.GradientDescentOptimizer(0.01)
+train=optimizer.minimize(loss)
+# training data
+x_train=[1,2,3,4]
+y_train=[0,-1,-2,-3]
+# training loop
+init=tf.global_variables_initializer()
+sess=tf.Session()
+sess.run(init) # reset values to wrong
+for i in range(1000):
+    sess.run(train,{x:x_train,y:y_train})
+
+# evaluate training accuracy
+curr_W,curr_b,curr_loss=sess.run([W,b,loss],{x:x_train,y:y_train})
+print("W:%s b:%s loss:%s"%(curr_W,curr_b,curr_loss))
+```
+执行之后产生
+```py
+W:[-0.9999969] b:[ 0.99999082] loss:5.69997e-11
+```
+这个更加复杂的程序仍然可以在TensorBoard中可视化
+
+![](Image/getting_started_final.png)
+
+# tf.contrib.learn
+`tf.contrib.learn`是一个简化了机器学习机制的高等级TensorFlow库，包括以下：
+* 运行训练循环
+* 运行评估循环
+* 管理数据集
+* 管理feeding
+`tf.contrib.learn`定义了许多通用模型
+
+## Basic usage
+注意使用`tf.contrib.learn`时线性回归程序变得多么简单：
+```py
+import tensorflow as tf
+# NumPy is often used to load, manipulate and preprocess data.
+import numpy as np
+
+# Declare list of features. We only have one real_valued feature. There are many
+# other types of columns that more complicated and useful.
+features=[tf.contrib.layers.real_valued_column("x",dimension=1)]
+
+# An estimator is the front end to invoke training (fitting) and evaluation
+# (interface). There are many predifined types like linear regression,
+# logistic regression, linear classification, logistic classification, and
+# many neural network classifiers and regressors. The following code
+# provides an estimator that does linear regression.
+estimator=tf.contrib.learn.LinearRegressor(feature_columns=features)
+
+# TensorFlow provides many helper methods to read and set up data sets.
+# Here we use `numpy_input_fn`, We have to tell the function how many batches
+# of data (num_epochs) we want and how big each batch should be.
+x=np.array([1.,2.,3.,4.])
+y=np.array([0.,-1.,-2.,-3.])
+input_fn=tf.contrib.learn.io.numpy_input_fn({"x":x},y,batch_size=4,num_epochs=1000)
+
+# We can invoke 1000 training steps by invoking the 'fit' method and passing the
+# training data set
+estimator.fit(input_fn=input_fn,steps=1000) 
+
+# Here we can evalute how well our model did.In a real example,we would want
+# to use a separate validation and testing data set to avoid overfitting.
+print(estimator.evaluate(input_fn=input_fn))
+```
+
+运行，结果如下
+```py
+{'global_step': 1000, 'loss': 4.6707452e-08} 
+```
+*多次计算的值不同？？*
+
+## A custom model
+`tf.contrib.learn`不会将你局限在预定义的模型中。假设我们想创建一个TensorFlow中没有内建的自定义模型。我们仍然可以保留`tf.contrib.learn`的数据集，feeding，训练的高度抽象。为了说明，我们将使用我们对降低级别TensorFlow API的了解，展示如何实现我们自己的`LinearRegressor`等效模型。
+要定义一个和`tf.contrib.learn`一起工作的自定义模型，我们需要使用`tf.contrib.learn.Estimator`。`tf.contrib.learn.LinearRegressor`其实是`tf.contrib.learn.Estimator`的一个子类。我们给`Estimator`提供了一个函数`model_fn`来告诉`tf.contrib.learn`它如何评估预测，训练步骤和损失，而不是子类化`Estimator`。代码如下:
+```py
+import numpy as np
+import tensorflow as tf
+# Declare list of features, we only have one real-valued feature
+def model(features,labels,mode):
+    # Build a linear model and predict values
+    W=tf.get_variable("W",[1],dtype=tf.float64)
+    b=tf.get_variable("b",[1],dtype=tf.float64)
+    y=W*features['x']+b
+    # Loss sub-graph
+    loss=tf.reduce_sum(tf.square(y-labels))
+    # Training sub-graph
+    global_step=tf.train.get_global_step()
+    optimizer=tf.train.GradientDescentOptimizer(0.01)
+    train=tf.group(optimizer.minimize(loss),tf.assign_add(global_step,1))
+    # ModelFnOps connects subgraphs we built to the
+    # appropriate functionality
+    return tf.contrib.learn.ModelFnOps(mode=mode,predictions=y,loss=loss,train_op=train)
+estimator=tf.contrib.learn.Estimator(model_fn=model)
+# define our data set
+x=np.array([1.,2.,3.,4.])
+y=np.array([0.,-1.,-2.,-3.])
+input_fn=tf.contrib.learn.io.numpy_input_fn({"x":x},y,4,num_epochs=1000)
+
+# train
+estimator.fit(input_fn=input_fn,steps=1000)
+# evaluate our model
+print(estimator.evaluate(input_fn=input_fn,steps=10))
+```
+执行，结果：
+```py
+{'loss': 1.6590289e-10, 'global_step': 1000}
+```
+注意自定义`model()`函数的内容与我们从低级别API手动训练模型循环十分相似。
+
+# Next steps
+现在你有一个TensorFlow基本的工作知识。我们有许多教程，你可以查看以了解更多。如果你是一个机器学习的初学者，你可以看MNIST for beginners，如果不是请看Deep MNIST for experts.
