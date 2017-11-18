@@ -1,11 +1,13 @@
 # MFC Activex Control 在Visual Studio 2017中编译测试及注意要点
 
 最近需要将osg封装到COM中，以供winform来调用，研究了MFC Ativex，出现了一些问题，记录如下。
+
+--------------------------------------------------
 ## 系统环境
-|              |                      | 
-|--------------|----------------------|
-|Windows       |10 Pro 1709 16299.64  |
-|Visual Studio |Community 2017 15.4.4 |
+
+|`Windows`|`Visual Studio`| 
+|-|-|
+|EN 10 Pro 1709 16299.64|Community 2017 15.4.4|
 
 ## MFC Activex
 新建MFC Activex项目，默认是在界面上绘制一个椭圆，修改Platform为x64，General设置为默认。
@@ -38,7 +40,7 @@ build之后，在输出目录x64/Release中，生成OSGMFCActiveXControl.ocx，�
 
 ## Form中添加ocx控件
 打开Form1的设计文件Desiger.cs，声明一个AxOSGMFCActivexControl对象，并初始化，加入form的控件中
-```CS
+```csharp
 protected AxOSGMFCActiveXControlLib.AxOSGMFCActiveXControl AxOSGMFCActiveXControl;
 
 this.AxOSGMFCActiveXControl = new AxOSGMFCActiveXControlLib.AxOSGMFCActiveXControl();
