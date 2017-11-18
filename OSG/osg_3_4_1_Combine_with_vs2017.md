@@ -57,7 +57,7 @@ vs菜单打开Build->Batch Build，生成All_Build,INSTALL的Debug，Release四�
 
 点击Build按钮，开始生成，第一次生成比较耗时，需要二至三个小时。
 
-
+![buidl_success](Image/build_success.PNG)
 
 
 
