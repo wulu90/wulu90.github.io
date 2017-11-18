@@ -16,7 +16,7 @@
 
 Linker中的General配置中，修改Register Output为No，以免在每次生成时需要注册ocx，Visual Studio注册ocx需要管理员权限，非管理员权限运行时会报错。
 
-![linker_general](mfcAx_Image/linker_general.PNG)
+![property_linker_general](mfcAx_Image/property_linker_general.PNG)
 
 ## 注册ocx
 build之后，在输出目录x64/Release中，生成OSGMFCActiveXControl.ocx，以**管理员权限**启动cmd，用regsvr32命令注册ocx。
