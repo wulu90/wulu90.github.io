@@ -1,13 +1,13 @@
 # osg 3.4.1 编译
 
 ## 下载
-1. osg源代码下载，osg网站位置http://www.openscenegraph.org/index.php/download-section/stable-releases，本文中下载的是稳定版3.4.1，由于osg代码托管在GitHub上，具体地址为https://github.com/openscenegraph/OpenSceneGraph/tree/OpenSceneGraph-3.4.1
+1. osg源代码下载，osg网站位置[http://www.openscenegraph.org/index.php/download-section/stable-releases](http://www.openscenegraph.org/index.php/download-section/stable-releases "osg download website")，本文中下载的是稳定版3.4.1，由于osg代码托管在GitHub上，具体地址为[https://github.com/openscenegraph/OpenSceneGraph/tree/OpenSceneGraph-3.4.1](https://github.com/openscenegraph/OpenSceneGraph/tree/OpenSceneGraph-3.4.1 "osg github repo")
 
-2. osg第三方依赖库下载，第三方依赖库在osg网站上的位置http://www.openscenegraph.org/index.php/download-section/dependencies，选择针对Visual Studio 2017的64位full package，具体地址为https://download.osgvisual.org/3rdParty_VS2017_v141_x64_V11_full.7z 
+2. osg第三方依赖库下载，第三方依赖库在osg网站上的位置[http://www.openscenegraph.org/index.php/download-section/dependencies](http://www.openscenegraph.org/index.php/download-section/dependencies "osg 3dparty website")，选择针对Visual Studio 2017的64位full package，具体地址为[https://download.osgvisual.org/3rdParty_VS2017_v141_x64_V11_full.7z](https://download.osgvisual.org/3rdParty_VS2017_v141_x64_V11_full.7z "osg 3dparty link") 
 
-3. 数据包下载，osg网站地址http://www.openscenegraph.org/index.php/download-section/data，选择其中的OpenSceneGraph-3.4 standard dataset，下载地址为http://www.openscenegraph.org/downloads/stable_releases/OpenSceneGraph-3.4.0/data/OpenSceneGraph-Data-3.4.0.zip
+3. 数据包下载，osg网站地址[http://www.openscenegraph.org/index.php/download-section/data](http://www.openscenegraph.org/index.php/download-section/data "osg data website")，选择其中的OpenSceneGraph-3.4 standard dataset，下载地址为[http://www.openscenegraph.org/downloads/stable_releases/OpenSceneGraph-3.4.0/data/OpenSceneGraph-Data-3.4.0.zip](http://www.openscenegraph.org/downloads/stable_releases/OpenSceneGraph-3.4.0/data/OpenSceneGraph-Data-3.4.0.zip "osg data link")
 
-4. 编译工具CMake下载，官方网站https://cmake.org/，进入下载页面https://cmake.org/download/后选择Latest Release 3.9.6，windows 64位，installer安装版或zip绿色版均可，本文中下载的是zip绿色安装版，地址为https://cmake.org/files/v3.9/cmake-3.9.6-win64-x64.zip
+4. 编译工具CMake下载，官方网站https://cmake.org/，进入下载页面[https://cmake.org/download/](https://cmake.org/download/ "cmake website")后选择Latest Release 3.9.6，windows 64位，installer安装版或zip绿色版均可，本文中下载的是zip绿色安装版，地址为[https://cmake.org/files/v3.9/cmake-3.9.6-win64-x64.zip](https://cmake.org/files/v3.9/cmake-3.9.6-win64-x64.zip "cmake link")
 
 ## 准备
 建立osg文件夹，然后下载后的文件解压并组织文件夹如下：
