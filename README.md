@@ -4,4 +4,4 @@ TensorFlow
 + [机器学习初学者的MNIST教程](TensorFlow/MNIST_For_ML_Beginners "MNIST Beginners")
 
 OSG
-+ [便宜OSG 3.4.1](OSG/osg_3_4_1_Combine_with_vs2017 "osg 3.4.1 build")
++ [编译OSG 3.4.1](OSG/osg_3_4_1_Combine_with_vs2017 "osg 3.4.1 build")
