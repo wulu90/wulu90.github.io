@@ -6,7 +6,7 @@
 ```git
 ssh -T git@github.com
 ```
-若仓库使用https协议clone下来的，要修改远程仓库的地址为ssh地址，，命令为
+若仓库使用https协议clone下来的，要修改远程仓库的地址为ssh地址，命令为
 ```git
 git remote set-url origin git@github.com:XXXXXXXX.git
 ```
