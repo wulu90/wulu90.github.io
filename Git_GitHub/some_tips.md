@@ -11,3 +11,5 @@ ssh -T git@github.com
 git remote set-url origin git@github.com:XXXXXXXX.git
 ```
 或直接修改config文件，或先删除现有远程仓库，再添加新的远程仓库。
+
+2. 本地在用vscode编写markdown时，图片路径不区分大小写；github中路径区分大小写。

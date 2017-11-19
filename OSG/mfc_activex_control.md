@@ -59,4 +59,4 @@ private void button1_Click(object sender, EventArgs e)
 
 ![result](mfcAx_Image/result.PNG)
 
-**每次在修改了MFC Activex的代码，重新生成C++项目后，需要重新注册ocx，winform项目要Rebuild，或clean后build**
+~~**每次在修改了MFC Activex的代码，重新生成C++项目后，需要重新注册ocx，winform项目要Rebuild，或clean后build**~~
