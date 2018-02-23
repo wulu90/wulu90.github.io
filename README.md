@@ -9,3 +9,6 @@ OSG
 
 Git&GitHub
 + [Git&GitHub Tips](Git_GitHub/some_tips "some tips")
+
+FileGDB&C++/CLI
++ [FileGDB封装过程点滴记录](FileGDB_C++_CLI/logs_tips_dev "some logs&tips")
