@@ -19,5 +19,11 @@ namespace FileGDB {
 ## S_OK等重定义
 将#include <msclr/marshal_cppstd.h>放到所有引用的最前面
 
-## vector<wstring> to cli::array<String^>^
+## vector \<wstring> to cli::array<String^>^
 扩展marshal_as方法，在MyMarshal.h文件中
+
+## 参数 out
+使用OutAttribute，定义参数时记得**加%**
+```cpp
+static void  GetErrorRecord(int recordNmu, [Runtime::InteropServices::Out] int %errorCode, [Runtime::InteropServices::Out] String^ %errorDescription);
+```
