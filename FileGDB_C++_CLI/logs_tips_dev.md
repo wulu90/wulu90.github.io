@@ -28,3 +28,21 @@ namespace FileGDB {
 ```cpp
 static void  GetErrorRecord(int recordNmu, [Runtime::InteropServices::Out] int %errorCode, [Runtime::InteropServices::Out] String^ %errorDescription);
 ```
+
+## 实现IEnumerable
+实现IEnumerable要重写两个同名的函数GetEnumerator，分别是System::Collections::Generic::IEnumerator\<T> System::Collections::Generic::GetEnumerator()和System::Collections::IEnumerator System::Collections::IEnumerable::GetEnumerator()，由于C++中无法直接通过返回值不同来重载函数，需要使用别名
+```cpp
+using namespace System;
+using namespace System::Collections::Generic;
+namespace FileGDB {
+	ref class Row;
+
+	public ref class RowCollection sealed :IEnumerable<Row^>{
+	public:
+		// Inherited via IEnumerable
+		virtual IEnumerator<Row^>^ GetEnumerator();
+		virtual System::Collections::IEnumerator^ GetEnumeratorNonGeneric() = System::Collections::IEnumerable::GetEnumerator;
+```
+参考链接:
+1. https://stackoverflow.com/questions/8760322/troubles-implementing-ienumerablet
+2. https://docs.microsoft.com/en-us/cpp/dotnet/how-to-iterate-over-a-generic-collection-with-for-each
