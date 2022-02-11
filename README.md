@@ -15,5 +15,5 @@ FileGDB&C++/CLI
 
 Golang
 + [Golang安装及hello world](Golang/install "install go and hello world")
-+ [使用Visual Studio Code开发Golang]()
-+ [Golang基本语法]()
++ ~~[使用Visual Studio Code开发Golang]()~~
++ ~~[Golang基本语法]()~~
