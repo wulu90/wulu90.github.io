@@ -23,7 +23,7 @@ func main(){
 }
 ```
 此时，就可以直接用go build命令来对源文件进行编译，需要的注意的是，如果build命令之后不加Untitled-2.go文件的名称，那么编译的结果是hello.exe,反之则是Untitled-2.exe,两个可执行文件都可以输出"hello,world"。
-![](Image/install/build.png "build")
+![](Image/install/build.PNG "build")
 
 使用go run同样可以得到结果。
 ```powershell

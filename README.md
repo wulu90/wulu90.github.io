@@ -12,3 +12,8 @@ Git&GitHub
 
 FileGDB&C++/CLI
 + [FileGDB封装过程点滴记录](FileGDB_C++_CLI/logs_tips_dev "some logs&tips")
+
+Golang
++ [Golang安装及hello world](Golang/install "install go and hello world")
++ [使用Visual Studio Code开发Golang]()
++ [Golang基本语法]()
