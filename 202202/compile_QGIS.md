@@ -1,4 +1,9 @@
 # QGIS在Linux和Windows上的编译
+# 2023年11月更新
+
+在 Arch Linux 及 Windows 11 上都编译了 QGIS ，一些总结：都使用的 CMakePresets.json 文件来控制编译选项，包括 CMake 查找路径，可执行程序环境变量，编译开关，编辑工具平台，目标程序架构，Release/Debug 类型等等。避免了像以前一样需要调整 configonly.bat，msvc-env.bat package-nightly.bat 等文件，CMakePresets.json 文件直接作用于 CMakeLists.txt 文件。
+
+安装 Visual Studio 2022 时勾选 C++ CMake tools for Windows，就不用额外安装 CMake 及 Ninja。
 
 ## Linux上的编译调试
 ### 编译及调试
