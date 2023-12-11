@@ -49,3 +49,20 @@ int main() {
 ```
 
 由于vector 重新分配了空间，原始迭代器指向的值就不可预测了，调试过程中，vector 的 raw_pointer (first) 内存地址发生了变化。
+
+## CMakePresets
+
+CMakePresets.json 中使用指定的 cmake 和 ninja 可执行文件。在 configurePresets 设置 cmakeExecutable 的值，在 cacheVariables 中设置 CMAKE_MAKE_PROGRAM 的值。
+```jsonc
+"cmakeExecutable": "E:/msys64/ucrt64/bin/cmake.exe", 
+"cacheVariables" : {
+    "CMAKE_MAKE_PROGRAM":"E:/msys64/ucrt64/bin/ninja.exe"
+}
+```
+
+## awk grep
+grep s 过滤所有含有 s 的行；awk '{ print $1 }' ORS=' ' 将分隔符由 new line 改为空格，输出到一行；
+```bash
+pacman -Q | grep mingw-w64-ucrt-x86_64 | awk '{ print $1 }' ORS=' '
+```
+查找所有已安装的包，过来条件是包名含有 mingw-w64-ucrt-x86_64，输出所有空格前的字符串到一行。
