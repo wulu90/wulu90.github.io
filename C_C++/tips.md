@@ -66,3 +66,18 @@ grep s 过滤所有含有 s 的行；awk '{ print $1 }' ORS=' ' 将分隔符由 
 pacman -Q | grep mingw-w64-ucrt-x86_64 | awk '{ print $1 }' ORS=' '
 ```
 查找所有已安装的包，过来条件是包名含有 mingw-w64-ucrt-x86_64，输出所有空格前的字符串到一行。
+
+## 派生类 initialization list 构造
+派生类在使用 initialization list 构造时，list 中只能包含直接成员，继承的基类不能包含在其中。
+```cpp
+struct base{
+    int m;
+    base(int _m):m(_m){}
+};
+
+struct derived:public base{
+    int n;
+    derived(int _m,int _n):n(_n),m(_m){} // error，不能用 n(_n),m(_m) 初始化 m
+    derived(int _m,int _n):base{_m},n{_n}{} // ok
+};
+```
