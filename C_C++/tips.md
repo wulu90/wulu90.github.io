@@ -115,3 +115,23 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /STACK:10000000")
         }
     }
 ```
+
+## array initialization
+array initialization!!! 十分重要！！！在两个不同的环境下得到了不同的初始化值。
++ Archlinux gcc13.2.1 初始化为零
++ Windows11 msys64 ucrt64 gcc 13.2.0 初始化为随机值
++ Windows11 visual studio 17.8.3 c++ latest，locals watch 窗口查看c值报错
+
+code from aoc2023 day24
+```cpp
+array<int64_t, 3> matvecmul(const array<array<int64_t, 3>, 3>& mat, const array<int64_t, 3>& b) {
+    // array<int64_t, 3>  // wrong value in msys64 ucrt gcc
+    array<int64_t, 3> c{0ll, 0ll, 0ll}; // important 
+    for (size_t i = 0; i < 3; ++i) {
+        for (size_t j = 0; j < 3; ++j) {
+            c[i] += mat[i][j] * b[j];
+        }
+    }
+    return c;
+}
+```
